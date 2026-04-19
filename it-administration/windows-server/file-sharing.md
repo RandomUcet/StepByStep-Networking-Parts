@@ -7,15 +7,13 @@ Tento dokument poskytuje detailní návod na konfiguraci sdílení souborů v pr
 
 ## Podrobný postup konfigurace
 
-### 1. Příprava adresářové struktury
-Před samotným sdílením je nutné vytvořit logickou strukturu složek na datovém svazku serveru. Doporučuje se neukládat uživatelská data na systémový disk (C:), ale na dedikovaný datový oddíl.
+### 1. Příprava adresářové struktury (Zadání SPOS)
+Před samotným sdílením je nutné vytvořit logickou strukturu složek na lokálním disku C: (nebo lépe na dedikovaném datovém oddílu).
+Vytvořte si postupně následující složky: `Home`, `Install`, `Faktury`, `Ucetnictvi`, `Spolecne_dokumenty` a `Zalohy`.
 
 
 *Krok navíc k ověření:* Ujistěte se, že jste v okně či sekci týkající se **Příprava složek**. Pečlivě překontrolujte, zda zadané údaje odpovídají přesně podle předchozího textového rozpisu. Důkladně se podívejte na zaklikávací boxy i vybrané hodnoty. Jakmile budete mít vše správně nastavené a ověřené, klikněte na odpovídající potvrzovací tlačítko (např. OK, Další, Next, Apply nebo Uložit), abyste úpravy definitivně potvrdili a posunuli se dál v průvodci.
 
-
-> [!TIP]
-> Pro lepší přehlednost vytvářejte složky podle organizační struktury firmy (např. Oddělení, Projekty, Veřejné).
 
 ### 2. Konfigurace pokročilého sdílení
 Klikněte pravým tlačítkem na cílovou složku, zvolte **Properties** (Vlastnosti) a přejděte na kartu **Sharing** (Sdílení). Zde klikněte na **Advanced Sharing** (Rozšířené sdílení).
@@ -35,28 +33,18 @@ V okně pokročilého sdílení klikněte na tlačítko **Permissions** (Oprávn
 
 
 > [!IMPORTANT]
-> Z bezpečnostních důvodů vždy odstraňte výchozí skupinu **Everyone**. Místo ní přidejte konkrétní doménové skupiny, kterým chcete přístup umožnit.
+> Z bezpečnostních důvodů **vždy odstraňte výchozí skupinu Everyone**. Místo ní přidejte konkrétní doménové skupiny, kterým chcete přístup umožnit (pro zjednodušení můžete přidat např. skupinu všech zaměstnanců a povolit jim **Full Control** přímo na kartě Share, protože skutečná bezpečnostní práva doladíte až v dalším kroku na kartě Security/NTFS).
 
-### 4. Přidání doménových skupin
-Pomocí tlačítka **Add** vyhledejte příslušné skupiny v Active Directory (např. `Domain Users`).
+### 4. Nastavení zabezpečení NTFS (Security) podle zadání
+Přepněte se na kartu **Security** (Zabezpečení) ve vlastnostech složky. Zde se definují skutečná oprávnění k souborům a podsložkám pomocí explicitního přidělování (Allow) nebo odepírání (Deny) práv skupinám.
 
-
-*Krok navíc k ověření:* Ujistěte se, že jste v okně či sekci týkající se **Přidání skupin**. Pečlivě překontrolujte, zda zadané údaje odpovídají přesně podle předchozího textového rozpisu. Důkladně se podívejte na zaklikávací boxy i vybrané hodnoty. Jakmile budete mít vše správně nastavené a ověřené, klikněte na odpovídající potvrzovací tlačítko (např. OK, Další, Next, Apply nebo Uložit), abyste úpravy definitivně potvrdili a posunuli se dál v průvodci.
-
-
-> [!NOTE]
-> Pro zjednodušení správy se na úrovni sdílení (Share Permissions) doporučuje nastavit **Full Control** pro danou skupinu a samotné omezení přístupu (čtení/zápis) řešit až na úrovni NTFS.
-
-### 5. Nastavení zabezpečení NTFS (Security)
-Přepněte se na kartu **Security** (Zabezpečení) ve vlastnostech složky. Zde se definují skutečná oprávnění k souborům a podsložkám.
-
-
-*Krok navíc k ověření:* Ujistěte se, že jste v okně či sekci týkající se **NTFS zabezpečení**. Pečlivě překontrolujte, zda zadané údaje odpovídají přesně podle předchozího textového rozpisu. Důkladně se podívejte na zaklikávací boxy i vybrané hodnoty. Jakmile budete mít vše správně nastavené a ověřené, klikněte na odpovídající potvrzovací tlačítko (např. OK, Další, Next, Apply nebo Uložit), abyste úpravy definitivně potvrdili a posunuli se dál v průvodci.
-
-
-- **Read & execute**: Uživatel může číst a spouštět soubory.
-- **Modify**: Uživatel může číst, zapisovat i mazat soubory.
-- **Full control**: Uživatel má veškerá práva, včetně měnění oprávnění.
+Nastavte práva (přes tlačítko Edit a Add) u jednotlivých složek přesně takto:
+*   **H: (Home):** Toto je domovská složka. Každý uživatel zde musí mít svou vlastní podsložku chráněnou proti vstupu neautorizovaných osob.
+*   **I: (Install):** Zde u všech běžných zaměstnaneckých skupin zaškrtněte pouze **Read** (čtení). Skupině Administrátorů (Správců) nechte zaškrtnuto **Full Control** nebo **Modify**.
+*   **F: (Faktury):** Odepřete přístup všem (Deny) kromě skupin **THP** a **Ucetni**. Těmto dvěma skupinám zaškrtněte políčko **Modify** (Změnit), aby mohly ukládat, měnit a mazat veškerý obsah.
+*   **U: (Ucetnictvi):** Naprosto totožné nastavení jako u Faktur (odepřít všem kromě THP a Účetních, kterým přidáte Modify).
+*   **S: (Spolecne_dokumenty):** Zde přidejte skupinu všech zaměstnanců (např. Domain Users) a povolte jim zápis (Write/Modify), aby zde mohli všichni ukládat sdílené dokumenty.
+*   **Z: (Zalohy):** Sem přidejte pouze administrátory a dedikovaný účet vytvořený pro software na zálohování (backup_user). Všem ostatním přístup odepřete.
 
 ### 6. Verifikace a dokončení
 Po potvrzení všech dialogových oken se složka začne sdílet. Cestu ke složce (UNC cesta) naleznete na kartě **Sharing**.

@@ -19,7 +19,7 @@ sudo systemctl start apache2
 ```
 
 > [!NOTE]
-> Funkčnost serveru Apache si můžete ověřit v prohlížeči zadáním IP adresy vašeho serveru. Měla by se zobrazit "Apache2 Ubuntu Default Page".
+> **Ověření funkčnosti:** První ověření funkčnosti Apache proveďte přímo v Ubuntu zadáním příkazu `systemctl status apache2`. Pokud vidíte zelené slůvko "active", Apache běží. Následně přejděte na Windows klienta, otevřete prohlížeč a zadejte IP adresu vašeho Ubuntu serveru. Měla by se objevit výchozí stránka Apache s nepřehlédnutelným nápisem **"It works!"**.
 
 ### 2. Databázový server MariaDB
 Pro uložení obsahu WordPressu je nezbytný databázový server. Po instalaci spusťte bezpečnostní skript.
@@ -62,46 +62,45 @@ sudo systemctl restart apache2
 ```
 
 ### 5. Stažení a příprava WordPressu
-Stáhněte si nejnovější verzi WordPressu přímo z oficiálních stránek, rozbalte ji do složky webového serveru a nastavte správného vlastníka souborů (uživatel `www-data`).
+Stáhněte si nejnovější verzi WordPressu přímo z oficiálních stránek, rozbalte ji do výchozí složky webového serveru (`/var/www/html`) a nastavte správného vlastníka souborů (uživatel `www-data`).
 
 ```bash
 cd /tmp
 sudo wget https://wordpress.org/latest.tar.gz
 sudo tar -xvzf latest.tar.gz
-sudo mv wordpress /var/www/wordpress
-sudo chown -R www-data:www-data /var/www/wordpress
-sudo chmod -R 755 /var/www/wordpress
+sudo mv wordpress/* /var/www/html/
+sudo chown -R www-data:www-data /var/www/html
+sudo chmod -R 755 /var/www/html
 ```
 
-### 6. Konfigurace Apache VirtualHost
-Aby webový server věděl, odkud má soubory WordPressu načítat, vytvořte konfigurační soubor.
+> [!WARNING]
+> Při stahování přes `wget` dejte velký pozor na stahovanou verzi nebo výpadky na straně WordPressu. Často se může stát, že starý balíček z předchozích cvičení způsobí potíže s instalací. Vždy doporučujeme použít aktuální `latest.tar.gz` a zkontrolovat úspěšnost stažení.
+
+### 6. Odstranění výchozí Apache stránky
+Aby WordPress správně naběhl z hlavní složky html, odstraňte (nebo přejmenujte) výchozí `index.html`, který tam vytvořil Apache.
 
 ```bash
-sudo nano /etc/apache2/sites-available/wordpress.conf
+sudo rm /var/www/html/index.html
 ```
 
-> [!NOTE]
-> Vložte následující obsah a uložte (Ctrl+O, Enter, Ctrl+X):
-> ```apache
-> <VirtualHost *:80>
->   ServerAdmin admin@example.com
->   DocumentRoot /var/www/wordpress
->   <Directory /var/www/wordpress>
->     AllowOverride All
->     Require all granted
->   </Directory>
->   ErrorLog ${APACHE_LOG_DIR}/wordpress_error.log
->   CustomLog ${APACHE_LOG_DIR}/wordpress_access.log combined
-> </VirtualHost>
-> ```
+### 7. Konfigurace Apache VirtualHost a přepisování URL (Rewrite)
+Aby mohl WordPress správně pracovat s trvalými odkazy a směřováním, je nutné upravit konfiguraci.
 
-### 7. Aktivace webu a mod_rewrite
-Aktivujte novou konfiguraci, povolte modul pro přepisování URL adres (rewrite) a restartujte Apache.
+Otevřete výchozí konfigurační soubor Apache:
+```bash
+sudo nano /etc/apache2/sites-available/000-default.conf
+```
+
+A přidejte blok `<Directory>` (v případě, že chcete mít aktivní .htaccess soubory):
+```apache
+<Directory /var/www/html>
+    AllowOverride All
+</Directory>
+```
+Uložte pomocí `Ctrl+O` a ukončete `Ctrl+X`. Následně zapněte přepisovací modul a restartujte službu:
 
 ```bash
-sudo a2ensite wordpress.conf
 sudo a2enmod rewrite
-sudo a2dissite 000-default.conf
 sudo systemctl restart apache2
 ```
 
@@ -109,7 +108,7 @@ sudo systemctl restart apache2
 Vytvořte konfigurační soubor WordPressu na základě dodávaného vzoru a vyplňte v něm přístupové údaje k databázi.
 
 ```bash
-cd /var/www/wordpress
+cd /var/www/html
 sudo cp wp-config-sample.php wp-config.php
 sudo nano wp-config.php
 ```

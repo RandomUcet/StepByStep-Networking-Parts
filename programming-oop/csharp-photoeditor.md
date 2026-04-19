@@ -1403,4 +1403,9 @@ Tento tutoriál pokryl vytvoření kompletního editoru obrázků s následujíc
 Projekt demonstruje praktické využití OOP principů, práci s grafikou a vytváření interaktivních aplikací ve Windows Forms.
 
 
-[<kbd> ⮞ Zpět na úvodní stránku </kbd>](../README.md)
+
+
+---
+*Užitečný odkaz pro řešení problémů ve Windows Forms: [StackOverflow - This visible is not working in Windows Forms](https://stackoverflow.com/questions/3742709/this-visible-is-not-working-in-windows-forms)*
+
+[<kbd> ⮞ Zpět na úvodní stránku </kbd>](README.md)

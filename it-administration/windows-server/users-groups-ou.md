@@ -64,7 +64,11 @@ V doménovém prostředí je nutné dbát na bezpečnostní politiku hesel.
 
 
 ### 6. Praktické ukázky struktur v OU
-Příklady správně strukturovaných jednotek s odpovídajícími uživateli a skupinami pro různá oddělení.
+Při tvorbě vaší struktury doporučujeme držet se následující hierarchie, která perfektně pokrývá běžné firemní požadavky:
+- V kořenové složce vaší domény (např. `spos.local`) vytvořte OU s názvem `SPRAVCE` a do ní vložte minimálně 1 administrátorský účet.
+- Vytvořte velkou OU `ZAMESTNANCI` a do ní vnořte 5 menších pod-složek (OU): `Ucetni`, `THP`, `Vedeni`, `Ucitele`, `Zaci`.
+- Do každé z těchto pěti OU vložte 2 uživatelské účty (např. do Ucitele vytvořte uživatele `ucitel1` a `ucitel2`).
+- Nezapomeňte také vytvořit OU pro `Skupiny` (min. 5 ks), OU pro `Tiskarny` a OU pro `Sdilene slozky`.
 
 - **OU Vedení:** Obsahuje manažerské účty s vyššími privilegii.
 

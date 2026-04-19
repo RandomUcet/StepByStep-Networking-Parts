@@ -21,15 +21,13 @@ Před zahájením klonování se ujistěte, že je zdrojový virtuální stroj v
 > [!TIP]
 > **Full Clone** vytvoří zcela nezávislou kopii disku, kterou lze přenášet. **Linked Clone** sdílí disk se zdrojem, což šetří místo, ale klon je nefunkční bez původního stroje.
 
-### 2. Změna názvu počítače (Hostname)
-Po prvním spuštění klonu je nezbytné změnit jeho název. Pokud by v doméně existovaly dva stroje se stejným názvem, dojde k selhání zabezpečeného kanálu (Secure Channel).
-- Spusťte PowerShell jako administrátor a použijte příkaz:
-```powershell
-Rename-Computer -NewName "CLT-WIN10-02" -Restart
-```
-
-> [!IMPORTANT]
-> Změna názvu počítače vyžaduje restart systému, aby se projevila v síťové identifikaci a v registrech.
+### 2. Povýšení druhého serveru na záložní řadič
+Pokud podle zadání klonujete první hotový Windows Server, abyste z něj vytvořili druhý server (Windows Server 2), musíte změnit jeho název (Hostname) a začlenit jej do domény jako **Záložní řadič domény**.
+- Otevřete Server Manager, přidejte roli **Active Directory Domain Services** (pokud tam po klonování nezůstala).
+- Po instalaci klikněte na žlutý praporek nahoře a zvolte **Povýšit tento server na řadič domény** (Promote this server to a domain controller).
+- Tentokrát ale vyberte první možnost: **Přidat řadič domény do existující domény** (Add a domain controller to an existing domain).
+- Zadejte název vaší domény (např. `SPOS.local`) a klikněte na tlačítko Vybrat/Změnit (Select/Change), abyste zadali přihlašovací údaje administrátora z vašeho *prvního* serveru (např. `SPOS\Administrator` a heslo).
+- Projděte průvodcem, nastavte DSRM heslo pro obnovu a po restartu se tento druhý server stane plnohodnotným záložním řadičem, na který se budou replikovat uživatelé a nastavení.
 
 ### 3. Síťová konfigurace a DHCP
 Pokud nepoužíváte DHCP server, musíte ručně nastavit novou statickou IP adresu. V případě DHCP je vhodné vynutit obnovu zapůjčení.

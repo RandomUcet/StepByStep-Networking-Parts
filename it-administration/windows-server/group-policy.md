@@ -35,11 +35,12 @@ Vyhledejte politiku **Prohibit access to Control Panel and PC settings** a nasta
 *Krok navíc k ověření:* Ujistěte se, že jste v okně či sekci týkající se **Restrikce Ovládacích panelů**. Pečlivě překontrolujte, zda zadané údaje odpovídají přesně podle předchozího textového rozpisu. Důkladně se podívejte na zaklikávací boxy i vybrané hodnoty. Jakmile budete mít vše správně nastavené a ověřené, klikněte na odpovídající potvrzovací tlačítko (např. OK, Další, Next, Apply nebo Uložit), abyste úpravy definitivně potvrdili a posunuli se dál v průvodci.
 
 
-### 4. Vynucení pozadí plochy a zákaz změn
-Pro zajištění jednotné firemní/školní identity přejděte na:
+### 4. Vynucení pozadí a zákaz ikon na ploše
+Pro zajištění jednotné firemní/školní identity a čistého prostředí přejděte na:
 `User Configuration → Administrative Templates → Desktop`
 
-Aktivujte politiku **Prohibit User from changing desktop background**. Tím znemožníte uživatelům měnit tapetu.
+Aktivujte politiku **Prohibit User from changing desktop background** (Zákaz změny tapety). 
+Zároveň vyhledejte a aktivujte politiku **Hide and disable all items on the desktop** (Skrýt a zakázat všechny položky na ploše). Tím splníte striktní bezpečnostní požadavky na zcela čistou pracovní plochu bez ikon.
 
 
 *Krok navíc k ověření:* Ujistěte se, že jste v okně či sekci týkající se **Zákaz změny pozadí**. Pečlivě překontrolujte, zda zadané údaje odpovídají přesně podle předchozího textového rozpisu. Důkladně se podívejte na zaklikávací boxy i vybrané hodnoty. Jakmile budete mít vše správně nastavené a ověřené, klikněte na odpovídající potvrzovací tlačítko (např. OK, Další, Next, Apply nebo Uložit), abyste úpravy definitivně potvrdili a posunuli se dál v průvodci.
@@ -55,11 +56,16 @@ Podobným způsobem můžete omezit přístup k příkazové řádce, editoru re
 > [!WARNING]
 > Při nastavování restrikcí buďte opatrní, abyste nezablokovali kritické nástroje nezbytné pro běžnou práci uživatelů.
 
-### 6. Automatické mapování síťových jednotek
-Moderní způsob připojování disků je pomocí **Group Policy Preferences**:
+### 6. Automatické mapování síťových jednotek a tiskáren
+Jedním z hlavních úkolů administrátora je zajistit, že se každému uživateli po přihlášení automaticky připojí jeho sdílené disky (viz zadání SPOS) a případně nainstaluje firemní PDF tiskárna.
+To se dělá přes **Group Policy Preferences**:
 `User Configuration → Preferences → Windows Settings → Drive Maps`
 
-Zvolte **New → Mapped Drive**. Do pole "Location" zadejte cestu ve formátu UNC (např. `\\server\share\%username%`) a zvolte písmeno jednotky.
+Zvolte **New → Mapped Drive**. Do pole "Location" zadejte cestu ve formátu UNC:
+*   Pro disk H: (Home) zadejte `\\Název_Serveru\Home\%username%` a vyberte písmeno `H:`. Ponechte zakliknuté Reconnect.
+*   Zopakujte tento proces pro disk I: (`\\Název_Serveru\Install`), F: (`\\Název_Serveru\Faktury`), U: (`\\Název_Serveru\Ucetnictvi`), S: (`\\Název_Serveru\Spolecne_dokumenty`) a Z: (`\\Název_Serveru\Zalohy`), přičemž každému přidělte jeho správné písmeno ze zadání.
+
+Pro tiskárny přejděte na `User Configuration → Preferences → Control Panel Settings → Printers`, dejte New -> Shared Printer a zadejte cestu ke sdílené PDF tiskárně (např. `\\Název_Serveru\PDFCreator`).
 
 
 *Krok navíc k ověření:* Ujistěte se, že jste v okně či sekci týkající se **Mapování disků**. Pečlivě překontrolujte, zda zadané údaje odpovídají přesně podle předchozího textového rozpisu. Důkladně se podívejte na zaklikávací boxy i vybrané hodnoty. Jakmile budete mít vše správně nastavené a ověřené, klikněte na odpovídající potvrzovací tlačítko (např. OK, Další, Next, Apply nebo Uložit), abyste úpravy definitivně potvrdili a posunuli se dál v průvodci.

@@ -121,4 +121,9 @@ namespace HushkysDatabaze
 - **`using` bloky**: Spojení s databází (`SQLiteConnection`) nebo paměťové prostředky (`SQLiteDataAdapter`) pracují s unmanaged prostředky. Klíčové slovo `using` garantuje okamžité a bezpečné uvolnění (tzv. `Dispose`) a uzavření spojení ve chvíli, kdy kód opustí blok.
 - **Oddělení logiky (Repository Pattern)**: Všechny databázové dotazy jsou uzavřeny v samostatné třídě `REPOZITORY`. Tím je zamezeno míchání SQL kódu s logikou UI formulářů.
 
-[<kbd> ⮞ Zpět na úvodní stránku </kbd>](../README.md)
+
+
+---
+*Užitečný odkaz pro řešení problémů ve Windows Forms: [StackOverflow - This visible is not working in Windows Forms](https://stackoverflow.com/questions/3742709/this-visible-is-not-working-in-windows-forms)*
+
+[<kbd> ⮞ Zpět na úvodní stránku </kbd>](README.md)

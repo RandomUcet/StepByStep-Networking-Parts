@@ -191,4 +191,9 @@ using (Graphics graphics = Graphics.FromImage(newImage))
 ```
 Tím zajistíme, že prostředky GDI+ jsou včas uvolněny. Stejně tak kód správně disponuje předchozí iterací obrázku (`pictureBox1.Image.Dispose()`), aby nedocházelo k takzvaným únikům paměti (memory leaks) při rychlém posouvání.
 
-[<kbd> ⮞ Zpět na úvodní stránku </kbd>](../README.md)
+
+
+---
+*Užitečný odkaz pro řešení problémů ve Windows Forms: [StackOverflow - This visible is not working in Windows Forms](https://stackoverflow.com/questions/3742709/this-visible-is-not-working-in-windows-forms)*
+
+[<kbd> ⮞ Zpět na úvodní stránku </kbd>](README.md)

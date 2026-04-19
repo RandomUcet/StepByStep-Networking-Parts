@@ -88,4 +88,9 @@ namespace Malování
 4. **Konec kreslení (`MouseUp`)**: Po uvolnění tlačítka myši se proměnná `pohybKursoru` přepne zpět na `false`, což kreslení zastaví.
 5. **Změna barvy (`Click`)**: Na událost kliknutí různých barevných bloků z palety (tlačítka napojená na `cerna_Click`) je navázána logika, která zjišťuje barvu daného bloku a mění podle ní barvu kreslícího pera.
 
-[<kbd> ⮞ Zpět na úvodní stránku </kbd>](../README.md)
+
+
+---
+*Užitečný odkaz pro řešení problémů ve Windows Forms: [StackOverflow - This visible is not working in Windows Forms](https://stackoverflow.com/questions/3742709/this-visible-is-not-working-in-windows-forms)*
+
+[<kbd> ⮞ Zpět na úvodní stránku </kbd>](README.md)
